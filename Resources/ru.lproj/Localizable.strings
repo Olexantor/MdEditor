@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  MdEditor
+
+  Created by Александр Николаев on 24.09.2024.
+  
+*/
+
+"todolist" = "TodoList";
+"statistics" = "Статистика";
+
+"loginSceneAuthorization" = "Авторизация";
+"loginSceneLogin" = "Логин";
+"loginScenePassword" = "Пароль";
+"loginSceneInvalidPassword" = "Неверный пароль";
+"loginSceneInvalidLogin" = "Неверный логин";
+"loginSceneEmptyFields" = "Пустые поля логин и пароль";
+"loginSceneErrorAuthorization" = "Неверный логин пароль";
+
+"todolistSceneUncompleted" = "Незавершённые";
+"todolistSceneCompleted" = "Завершённые";
+
+"chartsSceneUncompleted_percents" = "Незавершённые: %@%";
+"chartsSceneCompletedPercents" = "Завершённые: %@%";
