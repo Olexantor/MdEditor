@@ -28,6 +28,7 @@ final class ChartsViewController: UIViewController {
 
 	private lazy var tableView: UITableView = {
 		let tableView = UITableView()
+        tableView.backgroundColor = .clear
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -60,7 +61,7 @@ extension ChartsViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: L10n.chartsSceneCellId, for: indexPath)
 		configureCell(cell, with: viewModel.segment[indexPath.row])
 
 		return cell
@@ -94,9 +95,9 @@ extension ChartsViewController: IChartsViewController {
 private extension ChartsViewController {
 
 	func setupUI() {
-		view.backgroundColor = .white
-		title = "Статистика"
-		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        view.backgroundColor = Theme.backgroundColor
+        title = L10n.statistics
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: L10n.chartsSceneCellId)
 		navigationController?.navigationBar.prefersLargeTitles = true
 
 		view.addSubview(pieChartView)
@@ -106,6 +107,7 @@ private extension ChartsViewController {
 	func configureCell(_ cell: UITableViewCell, with segment: ChartsModel.ViewModel.Segment) {
 		var contentConfiguration = cell.defaultContentConfiguration()
 		cell.selectionStyle = .none
+        cell.backgroundColor = .clear
 
 		let colorText = [NSAttributedString.Key.foregroundColor: segment.getColor()]
 		let taskText = NSMutableAttributedString(string: segment.getChartSegment().title, attributes: colorText)
@@ -142,9 +144,9 @@ extension ChartsModel.ViewModel.Segment {
 	func getColor() -> UIColor {
 		switch self {
 		case .completed:
-			return .systemMint
+            return Theme.chartCompleted
 		case .uncompleted:
-			return .systemRed
+            return Theme.chartUncompleted
 		}
 	}
 
