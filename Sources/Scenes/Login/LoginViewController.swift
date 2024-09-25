@@ -65,11 +65,11 @@ private extension LoginViewController {
 	func makeTextField() -> UITextField {
 		let textField = UITextField()
 
-		textField.backgroundColor = .white
-		textField.textColor = .black
+        textField.backgroundColor = Theme.backgroundColor
+        textField.textColor = Theme.black
 		textField.layer.borderWidth = Sizes.borderWidth
 		textField.layer.cornerRadius = Sizes.cornerRadius
-		textField.layer.borderColor = UIColor.lightGray.cgColor
+        textField.layer.borderColor = Theme.black.cgColor
 		textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: Sizes.Padding.half, height: textField.frame.height))
 		textField.leftViewMode = .always
 		textField.translatesAutoresizingMaskIntoConstraints = false
@@ -84,8 +84,9 @@ private extension LoginViewController {
 
 		button.configuration = .filled()
 		button.configuration?.cornerStyle = .medium
-		button.configuration?.baseBackgroundColor = .red
-		button.configuration?.title = "Login"
+        button.configuration?.baseBackgroundColor = Theme.accentColor
+        button.configuration?.title = L10n.loginSceneLogin
+        button.configuration?.baseForegroundColor = Theme.white
 		button.addTarget(self, action: #selector(login), for: .touchUpInside)
 
 		button.translatesAutoresizingMaskIntoConstraints = false
@@ -94,14 +95,32 @@ private extension LoginViewController {
 	}
 
 	func setupUI() {
-		view.backgroundColor = .white
-		title = "Authorization"
+        view.backgroundColor = Theme.backgroundColor
+        title = L10n.loginSceneAuthorization
 		navigationController?.navigationBar.prefersLargeTitles = true
 
-		// Кастомная конфигурация наших полей
-		textFieldLogin.placeholder = "Login"
-		textFieldPass.placeholder = "Password"
-		textFieldPass.isSecureTextEntry = true
+        let placeholderAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.preferredFont(forTextStyle: .body)
+        ]
+
+        let attributedLoginPlaceholder = NSAttributedString(
+            string: L10n.loginSceneLogin,
+            attributes: placeholderAttributes
+        )
+        
+        let attributedPasswordPlaceholder = NSAttributedString(
+            string: L10n.loginScenePassword,
+            attributes: placeholderAttributes
+        )
+        
+        textFieldLogin.attributedPlaceholder = attributedLoginPlaceholder
+        textFieldLogin.font = UIFont.preferredFont(forTextStyle: .body)
+        textFieldLogin.adjustsFontForContentSizeCategory = true
+        
+        textFieldPass.attributedPlaceholder = attributedPasswordPlaceholder
+        textFieldPass.font = UIFont.preferredFont(forTextStyle: .body)
+        textFieldPass.adjustsFontForContentSizeCategory = true
+        textFieldPass.isSecureTextEntry = true
 
 		view.addSubview(textFieldLogin)
 		view.addSubview(textFieldPass)
@@ -146,3 +165,14 @@ private extension LoginViewController {
 // MARK: - ILoginViewController
 
 extension LoginViewController: ILoginViewController {}
+
+extension LoginViewController {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            textFieldLogin.layer.borderColor = Theme.black.cgColor
+            textFieldPass.layer.borderColor = Theme.black.cgColor
+        }
+    }
+}

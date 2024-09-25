@@ -8,6 +8,13 @@
 
 "todolist" = "TodoList";
 "statistics" = "Статистика";
+"error" = "Ошибка";
+"ok" = "Ок";
+"all" = "Все";
+"important" = "Важные";
+"regular" = "Обычные";
+"completed" = "Завершенные";
+"uncompleted" = "Незавершенные";
 
 "loginSceneAuthorization" = "Авторизация";
 "loginSceneLogin" = "Логин";
@@ -19,6 +26,9 @@
 
 "todolistSceneUncompleted" = "Незавершённые";
 "todolistSceneCompleted" = "Завершённые";
+"todolistSceneDeadline" = "Deadline: %@";
+"todolistSceneCellId" = "cell";
 
-"chartsSceneUncompleted_percents" = "Незавершённые: %@%";
-"chartsSceneCompletedPercents" = "Завершённые: %@%";
+"chartsSceneUncompleted_percents" = "Незавершённые: %@%%";
+"chartsSceneCompletedPercents" = "Завершённые: %@%%";
+"chartsSceneCellId" = "cell";

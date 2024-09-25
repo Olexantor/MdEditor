@@ -49,15 +49,6 @@ final class TodoListViewController: UITableViewController {
 	}
 }
 
-// MARK: - Actions
-
-private extension TodoListViewController {
-	@objc
-	func addTapped() {
-		interactor?.createTask()
-	}
-}
-
 // MARK: - UITableView
 
 extension TodoListViewController {
@@ -77,7 +68,7 @@ extension TodoListViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let task = getTaskForIndex(indexPath)
-		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: L10n.todolistSceneCellId, for: indexPath)
 		configureCell(cell, with: task)
 		return cell
 	}
@@ -92,17 +83,11 @@ extension TodoListViewController {
 private extension TodoListViewController {
 
 	private func setupUI() {
-		view.backgroundColor = .white
-		title = "TodoList"
+        view.backgroundColor = Theme.backgroundColor
+        title = L10n.todolist
 		navigationController?.navigationBar.prefersLargeTitles = true
 
-		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-
-		navigationItem.rightBarButtonItem = UIBarButtonItem(
-			barButtonSystemItem: .add,
-			target: self,
-			action: #selector(addTapped)
-		)
+		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: L10n.todolistSceneCellId)
 	}
 
 	func getTaskForIndex(_ indexPath: IndexPath) -> TodoListModel.ViewModel.Task {
@@ -114,24 +99,31 @@ private extension TodoListViewController {
 	func configureCell(_ cell: UITableViewCell, with task: TodoListModel.ViewModel.Task) {
 		var contentConfiguration = cell.defaultContentConfiguration()
 
-		cell.tintColor = .red
+        cell.tintColor = Colors.red
 		cell.selectionStyle = .none
 
 		switch task {
 		case .importantTask(let task):
-			let redText = [NSAttributedString.Key.foregroundColor: UIColor.red]
-			let taskText = NSMutableAttributedString(string: task.priority + " ", attributes: redText )
-			taskText.append(NSAttributedString(string: task.title))
+            let violetColorAttribute = [NSAttributedString.Key.foregroundColor: Colors.red]
+            let blackColorAttribute = [NSAttributedString.Key.foregroundColor: Theme.black]
+			let taskText = NSMutableAttributedString(
+                string: task.priority + " ",
+                attributes: violetColorAttribute
+            )
+            let taskTitle = NSAttributedString(string: task.title, attributes: blackColorAttribute)
+			taskText.append(taskTitle)
 
 			contentConfiguration.attributedText = taskText
 			contentConfiguration.secondaryText = task.deadLine
 			cell.accessoryType = task.completed ? .checkmark : .none
 		case .regularTask(let task):
 			contentConfiguration.text = task.title
+            contentConfiguration.textProperties.color = Theme.black
 			cell.accessoryType = task.completed ? .checkmark : .none
 		}
 
 		cell.contentConfiguration = contentConfiguration
+        cell.backgroundColor = .clear
 	}
 }
 

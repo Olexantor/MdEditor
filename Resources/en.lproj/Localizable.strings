@@ -8,6 +8,13 @@
 
 "todolist" = "TodoList";
 "statistics" = "Statistics";
+"error" = "Error";
+"ok" = "Ok";
+"all" = "All";
+"important" = "Important";
+"regular" = "Regular";
+"completed" = "Completed";
+"uncompleted" = "Uncompleted";
 
 "loginSceneAuthorization" = "Authorization";
 "loginSceneLogin" = "Login";
@@ -19,6 +26,9 @@
 
 "todolistSceneUncompleted" = "Uncompleted";
 "todolistSceneCompleted" = "Completed";
+"todolistSceneDeadline" = "Deadline: %@";
+"todolistSceneCellId" = "cell";
 
-"chartsSceneUncompleted_percents" = "Uncompleted: %@%";
-"chartsSceneCompletedPercents" = "Completed: %@%";
+"chartsSceneUncompleted_percents" = "Uncompleted: %@%%";
+"chartsSceneCompletedPercents" = "Completed: %@%%";
+"chartsSceneCellId" = "cell";
