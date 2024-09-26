@@ -68,7 +68,7 @@ extension TodoListViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let task = getTaskForIndex(indexPath)
-        let cell = tableView.dequeueReusableCell(withIdentifier: L10n.todolistSceneCellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: L10n.TodoList.cellId, for: indexPath)
 		configureCell(cell, with: task)
 		return cell
 	}
@@ -84,10 +84,10 @@ private extension TodoListViewController {
 
 	private func setupUI() {
         view.backgroundColor = Theme.backgroundColor
-        title = L10n.todolist
+        title = L10n.Todolist.text
 		navigationController?.navigationBar.prefersLargeTitles = true
 
-		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: L10n.todolistSceneCellId)
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: L10n.TodoList.cellId)
 	}
 
 	func getTaskForIndex(_ indexPath: IndexPath) -> TodoListModel.ViewModel.Task {

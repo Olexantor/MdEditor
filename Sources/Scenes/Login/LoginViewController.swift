@@ -85,7 +85,7 @@ private extension LoginViewController {
 		button.configuration = .filled()
 		button.configuration?.cornerStyle = .medium
         button.configuration?.baseBackgroundColor = Theme.accentColor
-        button.configuration?.title = L10n.loginSceneLogin
+        button.configuration?.title = L10n.Login.buttonTitle
         button.configuration?.baseForegroundColor = Theme.white
 		button.addTarget(self, action: #selector(login), for: .touchUpInside)
 
@@ -96,7 +96,7 @@ private extension LoginViewController {
 
 	func setupUI() {
         view.backgroundColor = Theme.backgroundColor
-        title = L10n.loginSceneAuthorization
+        title = L10n.Login.title
 		navigationController?.navigationBar.prefersLargeTitles = true
 
         let placeholderAttributes: [NSAttributedString.Key: Any] = [
@@ -104,12 +104,12 @@ private extension LoginViewController {
         ]
 
         let attributedLoginPlaceholder = NSAttributedString(
-            string: L10n.loginSceneLogin,
+            string: L10n.Login.loginPlaceholder,
             attributes: placeholderAttributes
         )
         
         let attributedPasswordPlaceholder = NSAttributedString(
-            string: L10n.loginScenePassword,
+            string: L10n.Login.passwordPlaceholder,
             attributes: placeholderAttributes
         )
         

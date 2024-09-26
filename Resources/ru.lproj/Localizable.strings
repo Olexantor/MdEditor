@@ -6,29 +6,33 @@
   
 */
 
-"todolist" = "TodoList";
-"statistics" = "Статистика";
-"error" = "Ошибка";
-"ok" = "Ок";
-"all" = "Все";
-"important" = "Важные";
-"regular" = "Обычные";
-"completed" = "Завершенные";
-"uncompleted" = "Незавершенные";
+// MARK: - Common
+"Todolist.text" = "ТудуЛист";
+"Statistics.text" = "Статистика";
+"Error.text" = "Ошибка";
+"Ok.text" = "Ок";
+"All.text" = "Все";
+"Important.text" = "Важные";
+"Regular.text" = "Обычные";
+"Completed.text" = "Завершенные";
+"Uncompleted.text" = "Незавершенные";
+"DateFormat.text" = "dd.MM.yyyy HH:mm:ss";
 
-"loginSceneAuthorization" = "Авторизация";
-"loginSceneLogin" = "Логин";
-"loginScenePassword" = "Пароль";
-"loginSceneInvalidPassword" = "Неверный пароль";
-"loginSceneInvalidLogin" = "Неверный логин";
-"loginSceneEmptyFields" = "Пустые поля логин и пароль";
-"loginSceneErrorAuthorization" = "Неверный логин пароль";
+// MARK: Login Scene
+"Login.title" = "Авторизация";
+"Login.buttonTitle" = "Вход";
+"Login.loginPlaceholder" = "Логин";
+"Login.passwordPlaceholder" = "Пароль";
+"Login.invalidPassword" = "Неверный пароль";
+"Login.invalidLogin" = "Неверный логин";
+"Login.emptyFields" = "Пустые поля логин и пароль";
+"Login.errorAuthorization" = "Неверный логин пароль";
 
-"todolistSceneUncompleted" = "Незавершённые";
-"todolistSceneCompleted" = "Завершённые";
-"todolistSceneDeadline" = "Deadline: %@";
-"todolistSceneCellId" = "cell";
+// MARK: TodoList Scene
+"TodoList.deadline" = "Дэдлайн: %@";
+"TodoList.cellId" = "cell";
 
-"chartsSceneUncompleted_percents" = "Незавершённые: %@%%";
-"chartsSceneCompletedPercents" = "Завершённые: %@%%";
-"chartsSceneCellId" = "cell";
+// MARK: Charts Scene
+"Charts.uncompletedPercents" = "Незавершённые: %@%%";
+"Charts.completedPercents" = "Завершённые: %@%%";
+"Charts.cellId" = "cell";

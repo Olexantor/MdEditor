@@ -38,13 +38,13 @@ final class ChartsPresenter: IChartsPresenter {
 		let chartSegments: [ChartsModel.ViewModel.Segment] = [
 			.completed(
                 ChartsModel.ViewModel.ChartSegment(
-                    title: L10n.chartsSceneCompletedPercents(Int(completed)),
+                    title: L10n.Charts.completedPercents(Int(completed)),
                     value: completed
                 )
 			),
 			.uncompleted(
                 ChartsModel.ViewModel.ChartSegment(
-                    title: L10n.chartsSceneUncompletedPercents(Int(uncompleted)),
+                    title: L10n.Charts.uncompletedPercents(Int(uncompleted)),
                     value: uncompleted
                 )
 			)

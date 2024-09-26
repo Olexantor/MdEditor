@@ -7,9 +7,9 @@ enum TabbarPage {
 	func pageTitleValue() -> String {
 		switch self {
 		case .todoList:
-            return L10n.todolist
+            return L10n.Todolist.text
 		case .chart:
-            return L10n.statistics
+            return L10n.Statistics.text
 		}
 	}
 

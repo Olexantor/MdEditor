@@ -61,7 +61,7 @@ extension ChartsViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: L10n.chartsSceneCellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: L10n.Charts.cellId, for: indexPath)
 		configureCell(cell, with: viewModel.segment[indexPath.row])
 
 		return cell
@@ -96,8 +96,8 @@ private extension ChartsViewController {
 
 	func setupUI() {
         view.backgroundColor = Theme.backgroundColor
-        title = L10n.statistics
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: L10n.chartsSceneCellId)
+        title = L10n.Statistics.text
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: L10n.Charts.cellId)
 		navigationController?.navigationBar.prefersLargeTitles = true
 
 		view.addSubview(pieChartView)

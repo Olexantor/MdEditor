@@ -54,10 +54,14 @@ final class TodoListPresenter: ITodoListPresenter {
 	/// - Returns: Преобразованный результат.
 	private func mapTaskData(task: Task) -> TodoListModel.ViewModel.Task {
 		if let task = task as? ImportantTask {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = L10n.DateFormat.text
+            let formattedDate = dateFormatter.string(from: task.deadLine)
+            
 			let result = TodoListModel.ViewModel.ImportantTask(
                 title: task.title,
                 completed: task.completed,
-                deadLine: L10n.todolistSceneDeadline(task.deadLine),
+                deadLine: L10n.TodoList.deadline(formattedDate),
                 priority: "\(task.taskPriority)"
 			)
 			return .importantTask(result)
