@@ -8,11 +8,29 @@
 import UIKit
 import TaskManagerPackage
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+protocol IAppFactory {
+    func makeKeyWindowWithCoordinator(scene: UIWindowScene) -> (UIWindow, ICoordinator)
+}
+
+extension IAppFactory {
+    func makeKeyWindowWithCoordinator(scene: UIWindowScene) -> (UIWindow, ICoordinator) {
+        let navigationController = UINavigationController()
+        navigationController.navigationBar.prefersLargeTitles = true
+
+        let window = UIWindow(windowScene: scene)
+        let coordinator = AppCoordinator(navigationController: navigationController)
+
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
+
+        return (window, coordinator)
+    }
+}
+
+final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    private var appCoordinator: ICoordinator!  // swiftlint:disable:this implicitly_unwrapped_optional
-    private var orderedTaskManager: OrderedTaskManager! // swiftlint:disable:this implicitly_unwrapped_optional
+    private var appCoordinator: ICoordinator! // swiftlint:disable:this implicitly_unwrapped_optional
 
     func scene(
         _ scene: UIScene,
@@ -20,19 +38,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         guard let scene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: scene)
-    
-        let repository = TaskRepositoryStub()
-        orderedTaskManager = OrderedTaskManager(taskManager: TaskManager())
-        orderedTaskManager.addTasks(tasks: repository.getTasks())
+        (window, appCoordinator) = makeKeyWindowWithCoordinator(scene: scene)
 
-        appCoordinator = AppCoordinator(
-            window: window,
-            navigationController: UINavigationController(),
-            taskManager: orderedTaskManager
-        )
         appCoordinator.start()
-
-        self.window = window
     }
 }
+
+extension SceneDelegate: IAppFactory {}

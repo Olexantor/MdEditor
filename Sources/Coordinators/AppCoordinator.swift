@@ -11,15 +11,11 @@ final class AppCoordinator: BaseCoordinator {
 	// MARK: - Dependencies
 
 	private let navigationController: UINavigationController
-	private var window: UIWindow?
-    private let taskManager: ITaskManager
 
 	// MARK: - Initialization
 
-    init(window: UIWindow?, navigationController: UINavigationController, taskManager: ITaskManager) {
-		self.window = window
+    init(navigationController: UINavigationController) {
 		self.navigationController = navigationController
-        self.taskManager = taskManager
 	}
 
 	// MARK: - Internal methods
@@ -38,14 +34,11 @@ final class AppCoordinator: BaseCoordinator {
 		}
 
 		coordinator.start()
-
-		window?.rootViewController = navigationController
-		window?.makeKeyAndVisible()
 	}
 
 	func runMainFlow() {
 		let tabBarController = TabBarController()
-        let coordinator = MainCoordinator(tabBarController: tabBarController, taskManager: taskManager)
+        let coordinator = MainCoordinator(tabBarController: tabBarController)
 		addDependency(coordinator)
 		coordinator.start()
 

@@ -11,7 +11,7 @@ final class MainCoordinator: BaseCoordinator {
 	// MARK: - Dependencies
 
 	private let tabBarController: UITabBarController
-	private let taskManager: ITaskManager
+	private var taskManager: ITaskManager! // swiftlint:disable:this implicitly_unwrapped_optional
 
 	// MARK: - Private properties
 
@@ -19,9 +19,8 @@ final class MainCoordinator: BaseCoordinator {
 
 	// MARK: - Initialization
 
-	init(tabBarController: UITabBarController, taskManager: ITaskManager) {
+	init(tabBarController: UITabBarController) {
 		self.tabBarController = tabBarController
-        self.taskManager = taskManager
 	}
 
 	// MARK: - Internal methods
@@ -37,7 +36,11 @@ final class MainCoordinator: BaseCoordinator {
 // MARK: - run Flows -
 private extension MainCoordinator {
 	func runFlowByIndex(_ index: Int, on controller: UINavigationController) {
+        let repository = TaskRepositoryStub()
+        taskManager = OrderedTaskManager(taskManager: TaskManager())
+        taskManager.addTasks(tasks: repository.getTasks())
 		let coordinator: ICoordinator
+        
 		switch pages[index] {
 		case .todoList:
 			coordinator = TodoListCoordinator(
