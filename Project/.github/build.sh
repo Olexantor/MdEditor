@@ -8,6 +8,6 @@ brew install swiftlint
 
 xcodebuild clean -quiet
 xcodebuild build-for-testing\
-    -workspace 'Project/MdEditor.xcworkspace' \
+    -workspace 'MdEditor.xcworkspace' \
     -scheme 'MdEditor' \
     -destination 'platform=iOS Simulator,name=iPhone 15 Pro'
