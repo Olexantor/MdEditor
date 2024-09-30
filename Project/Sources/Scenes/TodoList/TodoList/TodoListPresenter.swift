@@ -57,7 +57,7 @@ final class TodoListPresenter: ITodoListPresenter {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = L10n.DateFormat.text
             let formattedDate = dateFormatter.string(from: task.deadLine)
-            
+
 			let result = TodoListModel.ViewModel.ImportantTask(
                 title: task.title,
                 completed: task.completed,

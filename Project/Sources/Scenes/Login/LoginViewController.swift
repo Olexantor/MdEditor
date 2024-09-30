@@ -88,6 +88,7 @@ private extension LoginViewController {
         button.configuration?.title = L10n.Login.buttonTitle
         button.configuration?.baseForegroundColor = Theme.white
 		button.addTarget(self, action: #selector(login), for: .touchUpInside)
+        button.accessibilityIdentifier = "buttonLogin"
 
 		button.translatesAutoresizingMaskIntoConstraints = false
 
@@ -107,16 +108,16 @@ private extension LoginViewController {
             string: L10n.Login.loginPlaceholder,
             attributes: placeholderAttributes
         )
-        
+
         let attributedPasswordPlaceholder = NSAttributedString(
             string: L10n.Login.passwordPlaceholder,
             attributes: placeholderAttributes
         )
-        
+
         textFieldLogin.attributedPlaceholder = attributedLoginPlaceholder
         textFieldLogin.font = UIFont.preferredFont(forTextStyle: .body)
         textFieldLogin.adjustsFontForContentSizeCategory = true
-        
+
         textFieldPass.attributedPlaceholder = attributedPasswordPlaceholder
         textFieldPass.font = UIFont.preferredFont(forTextStyle: .body)
         textFieldPass.adjustsFontForContentSizeCategory = true
@@ -169,10 +170,7 @@ extension LoginViewController: ILoginViewController {}
 extension LoginViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            textFieldLogin.layer.borderColor = Theme.black.cgColor
-            textFieldPass.layer.borderColor = Theme.black.cgColor
-        }
+        textFieldLogin.layer.borderColor = Theme.black.cgColor
+        textFieldPass.layer.borderColor = Theme.black.cgColor
     }
 }

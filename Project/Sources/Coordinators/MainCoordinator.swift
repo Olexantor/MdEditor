@@ -40,7 +40,7 @@ private extension MainCoordinator {
         taskManager = OrderedTaskManager(taskManager: TaskManager())
         taskManager.addTasks(tasks: repository.getTasks())
 		let coordinator: ICoordinator
-        
+
 		switch pages[index] {
 		case .todoList:
 			coordinator = TodoListCoordinator(
