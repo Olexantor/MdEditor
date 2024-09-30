@@ -60,8 +60,8 @@ let project = Project(
     name: "MdEditor",
     organizationName: "MyTeam",
     options: .options(
-        defaultKnownRegions: ["Base", "ru"],
-        developmentRegion: "Base"
+        defaultKnownRegions: ["en", "ru"],
+        developmentRegion: "en"
     ),
     packages: [.local(path: .relativeToManifest("Packages/TaskManagerPackage"))],
     targets: [target, uiTestTarget],
