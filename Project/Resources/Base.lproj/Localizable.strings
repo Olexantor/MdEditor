@@ -1,0 +1,38 @@
+/* 
+  Localizable.strings
+  MdEditor
+
+  Created by Александр Николаев on 24.09.2024.
+  
+*/
+
+// MARK: - Common
+"Todolist.text" = "TodoList";
+"Statistics.text" = "Statistics";
+"Error.text" = "Error";
+"Ok.text" = "Ok";
+"All.text" = "All";
+"Important.text" = "Important";
+"Regular.text" = "Regular";
+"Completed.text" = "Completed";
+"Uncompleted.text" = "Uncompleted";
+"DateFormat.text" = "yyyy-MM-dd HH:mm:ss";
+
+// MARK: Login Scene
+"Login.title" = "Authorization";
+"Login.buttonTitle" = "Enter";
+"Login.loginPlaceholder" = "Login";
+"Login.passwordPlaceholder" = "Password";
+"Login.invalidPassword" = "Invalid password";
+"Login.invalidLogin" = "Invalid login";
+"Login.emptyFields" = "Empty login or password fields";
+"Login.errorAuthorization" = "Invalid login and password";
+
+// MARK: TodoList Scene
+"TodoList.deadline" = "Deadline: %@";
+"TodoList.cellId" = "cell";
+
+// MARK: Charts Scene
+"Charts.uncompletedPercents" = "Uncompleted: %@%%";
+"Charts.completedPercents" = "Completed: %@%%";
+"Charts.cellId" = "cell";
