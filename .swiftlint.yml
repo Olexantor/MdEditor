@@ -171,7 +171,12 @@ identifier_name:
 
 # настройка уровня вложения
 nesting:
-  type_level: 4
+  type_level:
+    warning: 4
+    error: 6
+  function_level:
+    warning: 5
+    error: 10
 
 # максимально допустимое кол-во предупреждений
 warning_threshold: 120
