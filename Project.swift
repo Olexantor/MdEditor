@@ -40,8 +40,8 @@ let target = Target(
     bundleId: "com.Nikolaev.MdEditor",
     deploymentTargets: .iOS("15.0"),
     infoPlist: .extendingDefault(with: infoPlist),
-    sources: ["Project/Sources/**", "Project/Shared/**"],
-    resources: ["Project/Resources/**"],
+    sources: ["MdEditor/Sources/**", "MdEditor/Shared/**"],
+    resources: ["MdEditor/Resources/**"],
     scripts: [swiftLintTargetScript],
     dependencies: [.package(product: "TaskManagerPackage")]
 )
@@ -52,7 +52,7 @@ let uiTestTarget = Target(
     product: .uiTests,
     bundleId: "com.Nikolaev.MdEditor.MdEditorUITests",
     deploymentTargets: .iOS("15.0"),
-    sources: ["Project/MdEditorUITests/Sources/**", "Project/Shared/**"],
+    sources: ["MdEditor/MdEditorUITests/Sources/**", "MdEditor/Shared/**"],
     dependencies: [.target(name: "MdEditor")]
 )
 

@@ -4,7 +4,7 @@
 //
 
 import Foundation
-// swiftlint:disable nesting
+
 enum ChartsModel {
 
 	struct Response {
@@ -31,4 +31,3 @@ enum ChartsModel {
 		}
 	}
 }
-// swiftlint:enable nesting
