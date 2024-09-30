@@ -8,7 +8,7 @@
 
 import Foundation
 import TaskManagerPackage
-// swiftlint:disable nesting
+
 enum TodoListModel {
 
 	enum Request {
@@ -57,4 +57,3 @@ enum TodoListModel {
 		}
 	}
 }
-// swiftlint:enable nesting
