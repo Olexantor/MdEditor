@@ -53,6 +53,7 @@ let uiTestTarget = Target(
     bundleId: "com.Nikolaev.MdEditor.MdEditorUITests",
     deploymentTargets: .iOS("15.0"),
     sources: ["MdEditor/MdEditorUITests/Sources/**", "MdEditor/Shared/**"],
+	resources: ["MdEditor/Resources/**"],
     dependencies: [.target(name: "MdEditor")]
 )
 
