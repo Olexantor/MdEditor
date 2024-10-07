@@ -10,80 +10,59 @@ import XCTest
 
 final class TodoListSceneUITest: XCTestCase {
 	
-	var app: XCUIApplication!
+	let app = XCUIApplication()
+	lazy var screen = TodoListScreenObject(app: app)
 	
 	override func setUp() {
-		app = XCUIApplication()
-		app.launchArguments = ["-AplleLanguages", "(en)"]
-	}
-	
-	override func tearDown() {
-		app = nil
-	}
-	
-	
-	func test_header_firstHeader_shouldHaveCorrectTitle() {
-		let todoListScreen = TodoListScreenObject(app: app)
-		app.launch()
+		super.setUp()
+		continueAfterFailure = false
+		app.launchArguments = [LaunchArguments.skipLogin.rawValue]
 		
-		todoListScreen
-			.login()
-			.istodoListScreen()
-			.checkHeader(
-				id: AccessibilityIdentifier.TodoListScene.sectionID(section: 0).description,
-				title: L10n.Uncompleted.text
-			)
+		app.launch()
 	}
 	
-	func test_header_secondHeader_shouldHaveCorrectTitle() {
-		let todoListScreen = TodoListScreenObject(app: app)
-		app.launch()
-		
-		todoListScreen
-			.login()
-			.istodoListScreen()
-			.checkHeader(
-				id: AccessibilityIdentifier.TodoListScene.sectionID(section: 1).description,
-				title: L10n.Completed.text
-			)
+	func test_sections_mustBeValid() {
+		screen
+			.isTodoListScreen ()
+			.checkSectionsTitle(index: 0, title: L10n.Uncompleted.text)
+			.checkSectionsTitle(index: 1, title: L10n.Completed.text)
 	}
 	
-	func test_cell_secondHeader_shouldHaveCorrectTitle() {
-		let todoListScreen = TodoListScreenObject(app: app)
-		app.launch()
-		
-		todoListScreen
-			.login()
-			.istodoListScreen()
-			.checkHeader(
-				id: AccessibilityIdentifier.TodoListScene.sectionID(section: 1).description,
-				title: L10n.Completed.text
-			)
+	func test_tasks_mustBeValid() {
+		screen
+			.isTodoListScreen()
+			.checkCountOfSelectedItems(1)
+			.checkCountOfNotSelectedItems(4)
+			.checkCellTitle(section: 0, row: 0, title: L10n.Task.doHomework)
+			.checkCellTitle(section: 0, row: 1, title: L10n.Task.goShopping)
+			.checkCellTitle(section: 0, row: 2, title: L10n.Task.writeNewTasks)
+			.checkCellTitle(section: 0, row: 3, title: L10n.Task.solve3Algorithms)
+			.checkCellTitle(section: 1, row: 0, title: L10n.Task.doWorkout)
 	}
 	
-	func test_cell_text_shouldBeCorrect() {
-		let todoListScreen = TodoListScreenObject(app: app)
-		app.launch()
-		
-		todoListScreen
-			.login()
-			.istodoListScreen()
-			.check_cell(
-				id: AccessibilityIdentifier.TodoListScene.cellID(section: 1, row: 0).description,
-				text: "Do Workout"
-			)
+	func test_doTask_mustBeValid() {
+		screen
+			.isTodoListScreen()
+			.tapOnCell(section: 0, row: 0)
+			.checkCountOfSelectedItems(2)
+			.checkCountOfNotSelectedItems(3)
+			.checkCellTitle(section: 0, row: 0, title: L10n.Task.goShopping)
+			.checkCellTitle(section: 0, row: 1, title: L10n.Task.writeNewTasks)
+			.checkCellTitle(section: 0, row: 2, title: L10n.Task.solve3Algorithms)
+			.checkCellTitle(section: 1, row: 0, title: L10n.Task.doHomework)
+			.checkCellTitle(section: 1, row: 1, title: L10n.Task.doWorkout)
 	}
 	
-	func test_cellCount_inSection_shouldBeChangedAndCorrect() {
-		let todoListScreen = TodoListScreenObject(app: app)
-		app.launch()
-		
-		todoListScreen
-			.login()
-			.istodoListScreen()
-			.checkCellCountAfterTap(
-				in: 0,
-				tappedCellID: AccessibilityIdentifier.TodoListScene.cellID(section: 1, row: 0).description
-			)
+	func test_undoTask_mustBeValid() {
+		screen
+			.isTodoListScreen()
+			.tapOnCell(section: 1, row: 0)
+			.checkCountOfSelectedItems (0)
+			.checkCountOfNotSelectedItems(5)
+			.checkCellTitle(section: 0, row: 0, title: L10n.Task.doHomework)
+			.checkCellTitle(section: 0, row: 1, title: L10n.Task.goShopping)
+			.checkCellTitle(section: 0, row: 2, title: L10n.Task.writeNewTasks)
+			.checkCellTitle(section: 0, row: 3, title: L10n.Task.doWorkout)
+			.checkCellTitle(section: 0, row: 4, title: L10n.Task.solve3Algorithms)
 	}
 }

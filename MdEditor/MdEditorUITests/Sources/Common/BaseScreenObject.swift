@@ -20,12 +20,12 @@ class BaseScreenObject {
 
     // MARK: - Private elements
 
-    lazy var alert = app.alerts.firstMatch
-    lazy var alertButton = alert.buttons.firstMatch
+    private lazy var alert = app.alerts.firstMatch
+	private lazy var alertButton = alert.buttons.firstMatch
 
-    lazy var navigationBar = app.navigationBars.firstMatch
-    lazy var navigationBarButton = navigationBar.buttons.firstMatch
-    lazy var navigationBarTitle = navigationBar.staticTexts.firstMatch
+	private lazy var navigationBar = app.navigationBars.firstMatch
+	private lazy var navigationBarButton = navigationBar.buttons.firstMatch
+	private lazy var navigationBarTitle = navigationBar.staticTexts.firstMatch
     
     // MARK: - Initialization
     
@@ -63,6 +63,61 @@ class BaseScreenObject {
         
         return self
     }
+	
+	@discardableResult
+	func checkAlert(
+		title: String,
+		text: String,
+		timeout: TimeInterval = BaseScreenObject.defaultTimeout
+	) -> Self {
+		let alertTitle = alert.staticTexts.element(boundBy: 0)
+		let alertDescription = alert.staticTexts.element(boundBy: 1)
+		assert(alertTitle, [.contains(title)], timeout: timeout)
+		assert(alertDescription, [.contains(text)], timeout: timeout)
+		return self
+	}
+	
+	@discardableResult
+	func checkAlert(
+		containsText text: String,
+		timeout: TimeInterval = BaseScreenObject.defaultTimeout
+	) -> Self {
+		let alertTitle = alert.staticTexts.element(boundBy: 0)
+		assert(alertTitle, [.contains(text)], timeout: timeout)
+		return self
+	}
+	
+	@discardableResult
+	func closeAlert(
+		timeout: TimeInterval = BaseScreenObject.defaultTimeout
+	) -> Self {
+		assert(alert, [.exists])
+		tap(alertButton)
+		assert(alert, [.doesNotExist])
+		return self
+	}
+	
+	@discardableResult
+	func buttonAlertTap(
+		text: String,
+		timeout: TimeInterval = BaseScreenObject.defaultTimeout
+	) -> Self {
+		assert(alert, [.exists])
+		alert.buttons[text].tap()
+		
+		return self
+	}
+	
+	@discardableResult
+	func checkTitle(
+		contains text: String,
+		timeout: TimeInterval = BaseScreenObject.defaultTimeout
+	) -> Self {
+		assert(navigationBar, [.exists], timeout: timeout)
+		assert(navigationBarTitle, [.contains(text)], timeout: timeout)
+
+		return self
+	}
 }
 
 // MARK: - Keyboard
@@ -75,9 +130,12 @@ extension BaseScreenObject {
         case emoji = "Emoji"
     }
     
-    func setKeyboard(language: Lang) {
+	@discardableResult
+    func setKeyboard(language: Lang) -> Self {
         app.buttons["Next keyboard"].press(forDuration: 0.5)
         app.tables["InputSwitcherTable"].staticTexts[language.rawValue].tap()
+		
+		return self
     }
 }
 

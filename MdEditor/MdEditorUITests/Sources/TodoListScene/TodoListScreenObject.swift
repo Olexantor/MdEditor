@@ -12,66 +12,82 @@ import XCTest
 final class TodoListScreenObject: BaseScreenObject {
 	
 	// MARK: - Private properties
-	private lazy var loginButton = app.buttons[
-		AccessibilityIdentifier.LoginScene.buttonLogin.description
-	]
-	private lazy var todoListFirstTabBarButton = app.tabBars.buttons.matching(identifier:
-		AccessibilityIdentifier.TodoListScene.tabBarPage(index: 1).description
-	).element
+	private lazy var tableView = app.tables[AccessibilityIdentifier.TodoListScene.table.description]
 	
-	// MARK: - Private methods
-	private func getTableViewCellSection(identifier: String) -> XCUIElement  {
-		app.staticTexts[identifier]
-	}
-	
-	private func getTableViewCell(cellID: String) -> XCUIElement {
-		app.tables.cells.matching(
-			identifier: cellID
-		).element
-	}
-
-	private func getTableViewCellsOf(section: Int) -> [XCUIElement] {
-		app.tables.tabGroups.element(boundBy: section).cells.allElementsBoundByIndex
-	}
-	
-	// MARK: - TodoListScreenObject Methods
-	
+	// MARK: - ScreenObject Methods
 	@discardableResult
-	func login() -> Self {
-		assert(loginButton, [.exists])
-		loginButton.tap()
-		XCTAssertTrue(app.wait(for: .runningForeground, timeout: 3))
+	func isTodoListScreen() -> Self {
+		checkTitle(contains: L10n.Todolist.text)
+		assert(tableView, [.exists])
+		
 		return self
 	}
 	
 	@discardableResult
-	func istodoListScreen() -> Self {
-		assert(todoListFirstTabBarButton, [.exists])
+	func checkSectionsTitle(index: Int, title: String) -> Self {
+		let section = getSection(index: index)
+		XCTAssertEqual(section.label, title, "Title section \(index) should be equal '\(title)'")
 		return self
 	}
 	
 	@discardableResult
-	func checkHeader(id: String, title: String) -> Self {
-		let sectionHeader = getTableViewCellSection(identifier: id)
-		assert(sectionHeader, [.exists])
-		assert(sectionHeader, [.contains(title)])
-		return self
-	}
-	
-	@discardableResult
-	func check_cell(id: String, text: String) -> Self {
-		let cell = getTableViewCell(cellID: id)
+	func checkCellTitle(section: Int, row: Int, title: String) -> Self {
+		let cell = getCell(section: section, row: row)
 		assert(cell, [.exists])
-		assert(cell.staticTexts.firstMatch, [.contains(text)])
+		
+		let titleTaskLabel = cell.staticTexts.element(boundBy: 0).label
+		let contains = titleTaskLabel.contains(title)
+		
+		XCTAssertTrue(contains, "Title task \(titleTaskLabel) should be equal '\(title)'")
+		
 		return self
 	}
 	
-	func checkCellCountAfterTap(in section: Int, tappedCellID: String) -> Self {
-		let cellInSectionCount = getTableViewCellsOf(section: section).count
-		let cell = getTableViewCell(cellID: tappedCellID)
-		cell.tap()
-		let cellsInSectionCountAfterTap = getTableViewCellsOf(section: section).count
-		XCTAssertNotEqual(cellInSectionCount, cellsInSectionCountAfterTap)
+	@discardableResult
+	func checkCellDeadLine(section: Int, row: Int, deadline: String) -> Self {
+		let cell = getCell(section: section, row: row)
+		assert(cell, [.exists])
+		
+		let deadlineTask = cell.staticTexts.element(boundBy: 1).label
+		let isDeadlineTaskContain = deadlineTask.contains(deadline)
+		XCTAssertTrue(isDeadlineTaskContain, "Cell [\(section):\(row)] should contain '\(deadline)")
 		return self
+	}
+	
+	@discardableResult
+	func tapOnCell(section: Int, row: Int) -> Self {
+		let cell = getCell(section: section, row: row)
+		assert(cell, [.exists])
+		cell.tap()
+		
+		return self
+	}
+	
+	@discardableResult
+	func checkCountOfSelectedItems(_ count: Int) -> Self {
+		assert(tableView, [.exists])
+		let selected = tableView.children(matching: .cell).allElementsBoundByIndex.filter { $0.isSelected }
+		XCTAssertEqual(selected.count, count, "Количество выбранных ячеек не соответствует ожидаемому \(count)")
+		
+		return self
+	}
+	
+	@discardableResult
+	func checkCountOfNotSelectedItems(_ count: Int) -> Self {
+		assert(tableView, [.exists])
+		let selected = tableView.children(matching: .cell).allElementsBoundByIndex.filter { !$0.isSelected }
+		XCTAssertEqual(selected.count, count, "Количество невыбранных ячеек не соответствует ожидаемому \(count)")
+		
+		return self
+	}
+}
+
+private extension TodoListScreenObject {
+	func getSection(index: Int) -> XCUIElement {
+		tableView.otherElements[AccessibilityIdentifier.TodoListScene.section(index).description]
+	}
+	
+	func getCell(section: Int, row: Int) -> XCUIElement {
+		tableView.cells[AccessibilityIdentifier.TodoListScene.cell(section: section, row: row).description]
 	}
 }

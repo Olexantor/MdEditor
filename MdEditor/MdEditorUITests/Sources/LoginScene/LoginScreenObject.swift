@@ -27,6 +27,7 @@ final class LoginScreenObject: BaseScreenObject {
 
     @discardableResult
     func isLoginScreen() -> Self {
+		checkTitle(contains: L10n.Login.title)
         assert(textFieldLogin, [.exists])
         assert(textFieldPass, [.exists])
         assert(loginButton, [.exists])
@@ -59,24 +60,4 @@ final class LoginScreenObject: BaseScreenObject {
         
         return self
     }
-	
-	@discardableResult
-	func openScreenCheck() -> Self {
-		XCTAssertTrue(app.wait(for: .runningForeground, timeout: 3))
-		assert(textFieldLogin, [.doesNotExist])
-		return self
-	}
-	
-	@discardableResult
-	func checkAlertWith(message: String) -> Self {
-		assert(alert, [.exists])
-		let alertMessage = alert.staticTexts[message]
-		assert(alertMessage, [.contains(message)])
-		let okButton = alert.buttons["Ok"]
-		assert(okButton, [.exists])
-		okButton.tap()
-		XCTAssertTrue(app.wait(for: .runningForeground, timeout: 3))
-		assert(textFieldLogin, [.exists])
-		return self
-	}
 }

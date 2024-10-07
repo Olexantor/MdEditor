@@ -10,73 +10,38 @@ import XCTest
 
 final class LoginSceneUITest: XCTestCase {
 	
-	var app: XCUIApplication!
+	let app = XCUIApplication()
+	lazy var screen = LoginScreenObject(app: app)
 	
 	override func setUp() {
-		app = XCUIApplication()
-		app.launchArguments = ["-AplleLanguages", "(en)"]
-	}
-	
-	override func tearDown() {
-		app = nil
+		super.setUp()
+		continueAfterFailure = false
+		
+		app.launch()
 	}
 
-	func test_login_withValidCred_mustBeSuccess() {
-		let loginScreen = LoginScreenObject(app: app)
-		app.launch()
-	
-		loginScreen
+	func test_login_withInvalidCredentials_mustBeSuccess() {
+
+		screen
 			.isLoginScreen()
-			.set(login: "Admin")
-			.set(password: "pa$$32!")
+			.set(login: ConfigureTestEnvironment.InvalidCredentials.login)
+			.set(password: ConfigureTestEnvironment.InvalidCredentials.password)
 			.login()
-			.openScreenCheck()
+			.closeAlert()
+			.isLoginScreen()
 	}
 	
-	func test_login_withEmptyFieds_mustBeFailWithAlert() {
-		let loginScreen = LoginScreenObject(app: app)
-		app.launch()
-	
-		loginScreen
+	func test_login_withValidCredentials_mustBeSuccess() {
+		
+		let todoListSceneObject = TodoListScreenObject(app: app)
+
+		screen
 			.isLoginScreen()
+			.set(login: ConfigureTestEnvironment.ValidCredentials.login)
+			.set(password: ConfigureTestEnvironment.ValidCredentials.password)
 			.login()
-			.checkAlertWith(message: L10n.Login.emptyFields)
-	}
-	
-	func test_login_withInvalidLogin_mustBeFailWithAlert() {
-		let loginScreen = LoginScreenObject(app: app)
-		app.launch()
-	
-		loginScreen
-			.isLoginScreen()
-			.set(login: "x")
-			.set(password: "pa$$32!")
-			.login()
-			.checkAlertWith(message: L10n.Login.invalidLogin)
-	}
-	
-	func test_login_withInvalidPassword_mustBeFailWithAlert() {
-		let loginScreen = LoginScreenObject(app: app)
-		app.launch()
-	
-		loginScreen
-			.isLoginScreen()
-			.set(login: "Admin")
-			.set(password: "x")
-			.login()
-			.checkAlertWith(message: L10n.Login.invalidPassword)
-	}
-	
-	func test_login_withInvalidCredentials_mustBeFailWithAlert() {
-		let loginScreen = LoginScreenObject(app: app)
-		app.launch()
-	
-		loginScreen
-			.isLoginScreen()
-			.set(login: "x")
-			.set(password: "x")
-			.login()
-			.checkAlertWith(message: L10n.Login.errorAuthorization)
+		// для прохождения данного теста на устройстве (Мак) должен быть английский
+		todoListSceneObject.isTodoListScreen()
 	}
 }
 

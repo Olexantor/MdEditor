@@ -57,20 +57,10 @@ extension TodoListViewController {
 		viewModel.tasksBySections.count
 	}
 	
-	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let headerView = UIView()
-		
-		let label = UILabel(frame: CGRect(x: 20, y: 0, width: tableView.frame.width - 30, height: 30))
-		label.text = viewModel.tasksBySections[section].title
-		label.textColor = UIColor.systemGray
-		label.font = UIFont.boldSystemFont(ofSize: 17)
-		label.accessibilityIdentifier = AccessibilityIdentifier.TodoListScene.sectionID(
-						section: section
-   		).description
-		
-		headerView.addSubview(label)
-		
-		return headerView
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		let sectionView = tableView.headerView(forSection: section)
+		sectionView?.accessibilityIdentifier = AccessibilityIdentifier.TodoListScene.section(section).description
+		return viewModel.tasksBySections[section].title
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -81,7 +71,7 @@ extension TodoListViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let task = getTaskForIndex(indexPath)
         let cell = tableView.dequeueReusableCell(withIdentifier: L10n.TodoList.cellId, for: indexPath)
-		cell.accessibilityIdentifier = AccessibilityIdentifier.TodoListScene.cellID(
+		cell.accessibilityIdentifier = AccessibilityIdentifier.TodoListScene.cell(
 				section: indexPath.section,
 				row: indexPath.row
 		).description
@@ -102,7 +92,8 @@ private extension TodoListViewController {
         view.backgroundColor = Theme.backgroundColor
         title = L10n.Todolist.text
 		navigationController?.navigationBar.prefersLargeTitles = true
-
+		
+		self.tableView.accessibilityIdentifier = AccessibilityIdentifier.TodoListScene.table.description
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: L10n.TodoList.cellId)
 	}
 

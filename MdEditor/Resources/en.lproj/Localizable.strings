@@ -36,3 +36,10 @@
 "Charts.uncompletedPercents" = "Uncompleted: %@%%";
 "Charts.completedPercents" = "Completed: %@%%";
 "Charts.cellId" = "cell";
+
+// MARK: Task
+"Task.doHomework" = "Do homework";
+"Task.goShopping" = "Go shopping";
+"Task.writeNewTasks" = "Write new tasks";
+"Task.doWorkout" = "Do workout";
+"Task.solve3Algorithms" = "Solve 3 algorithms";

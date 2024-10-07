@@ -30,20 +30,20 @@ enum AccessibilityIdentifier {
     
 	enum TodoListScene: CustomStringConvertible {
 		case table
-		case sectionID(section: Int)
-		case cellID(section: Int, row: Int)
+		case section(Int)
+		case cell(section: Int, row: Int)
 		case tabBarPage(index: Int)
 		
 		var description: String {
 			switch self {
 			case .table:
-				"TodoListTableView"
-			case .sectionID(let section):
-				"section-\(section)"
-			case .cellID(let section, let row):
+				"todoListScene.table"
+			case .section(let section):
+				"todoListScene.cell-\(section)"
+			case .cell(let section, let row):
 				"cell-\(section)-\(row)"
 			case .tabBarPage(let index):
-				"tabBarPage-\(index)"
+				"todoListScene.section-\(index)"
 			}
 		}
     }
