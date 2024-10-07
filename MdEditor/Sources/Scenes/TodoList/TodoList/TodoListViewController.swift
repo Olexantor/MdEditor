@@ -56,9 +56,11 @@ extension TodoListViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		viewModel.tasksBySections.count
 	}
-
+	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		viewModel.tasksBySections[section].title
+		let sectionView = tableView.headerView(forSection: section)
+		sectionView?.accessibilityIdentifier = AccessibilityIdentifier.TodoListScene.section(section).description
+		return viewModel.tasksBySections[section].title
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,6 +71,10 @@ extension TodoListViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let task = getTaskForIndex(indexPath)
         let cell = tableView.dequeueReusableCell(withIdentifier: L10n.TodoList.cellId, for: indexPath)
+		cell.accessibilityIdentifier = AccessibilityIdentifier.TodoListScene.cell(
+				section: indexPath.section,
+				row: indexPath.row
+		).description
 		configureCell(cell, with: task)
 		return cell
 	}
@@ -86,7 +92,8 @@ private extension TodoListViewController {
         view.backgroundColor = Theme.backgroundColor
         title = L10n.Todolist.text
 		navigationController?.navigationBar.prefersLargeTitles = true
-
+		
+		self.tableView.accessibilityIdentifier = AccessibilityIdentifier.TodoListScene.table.description
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: L10n.TodoList.cellId)
 	}
 

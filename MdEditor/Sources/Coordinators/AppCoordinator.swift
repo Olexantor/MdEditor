@@ -46,3 +46,13 @@ final class AppCoordinator: BaseCoordinator {
 		navigationController.setViewControllers([tabBarController], animated: true)
 	}
 }
+
+extension AppCoordinator: ITestCoordinator {
+	func testStart(paremeters: [LaunchArguments: Bool]) {
+		if let skipLogin = paremeters[LaunchArguments.skipLogin], skipLogin {
+			runMainFlow()
+		} else {
+			runLoginFlow()
+		}
+	}
+}

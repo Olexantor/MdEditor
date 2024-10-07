@@ -12,13 +12,17 @@ final class TabBarController: UITabBarController {
 
 private extension TabBarController {
 	func setup() {
-		let controllers: [UINavigationController] = TabbarPage.allTabbarPages.map { getTabController($0) }
+		let controllers: [UINavigationController] = TabbarPage.allTabbarPages
+			.enumerated()
+			.map { index, tabBarPage in
+				getTabController(tabBarPage, index)
+			}
 
 		setViewControllers(controllers, animated: true)
 		selectedIndex = TabbarPage.firstTabbarPage.pageOrderNumber
 	}
 
-	func getTabController(_ page: TabbarPage) -> UINavigationController {
+	func getTabController(_ page: TabbarPage, _ index: Int) -> UINavigationController {
 		let navController = UINavigationController()
 
 		navController.tabBarItem = UITabBarItem(
@@ -26,6 +30,11 @@ private extension TabBarController {
 			image: page.pageIconValue(),
 			tag: page.pageOrderNumber
 		)
+		
+		navController.tabBarItem.accessibilityIdentifier = AccessibilityIdentifier
+			.TodoListScene
+			.tabBarPage(index: index)
+			.description
 
 		return navController
 	}

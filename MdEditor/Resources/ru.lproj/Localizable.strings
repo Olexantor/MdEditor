@@ -36,3 +36,10 @@
 "Charts.uncompletedPercents" = "Незавершённые: %@%%";
 "Charts.completedPercents" = "Завершённые: %@%%";
 "Charts.cellId" = "cell";
+
+// MARK: Task
+"Task.doHomework" = "Сделать домашнее задание";
+"Task.goShopping" = "Сделать покупки";
+"Task.writeNewTasks" = "Написать новые задачи";
+"Task.doWorkout" = "Выполнить тренировку";
+"Task.solve3Algorithms" = "Решить 3 алгоритма";

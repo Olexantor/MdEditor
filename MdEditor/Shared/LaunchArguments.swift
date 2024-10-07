@@ -2,15 +2,21 @@
 //  LaunchArguments.swift
 //  MdEditor
 //
-//  Created by Александр Николаев on 29.09.2024.
+//  Created by Александр Николаев on 06.10.2024.
 //  Copyright © 2024 MyTeam. All rights reserved.
 //
 
-import Foundation
-
 enum LaunchArguments: String {
-    case enableTesting = "-enableTesting"
-    static let serverUrl = ["serverUrl": "swiftbook.ru"]
-    static let englishLanguage = ["-AplleLanguages", "(en)"]
-    static let russianLanguage = ["-AplleLanguages", "(ru)"]
+	case enableTesting = "-enableTesting"
+	case skipLogin = "-skipLogin"
+	
+	static func parameters() -> [LaunchArguments: Bool] {
+		var parameters = [LaunchArguments: Bool]()
+		for argument in CommandLine.arguments {
+			if let parameter = LaunchArguments(rawValue: argument) {
+				parameters[parameter] = true
+			}
+		}
+		return parameters
+	}
 }

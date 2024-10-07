@@ -53,6 +53,7 @@ let uiTestTarget = Target(
     bundleId: "com.Nikolaev.MdEditor.MdEditorUITests",
     deploymentTargets: .iOS("15.0"),
     sources: ["MdEditor/MdEditorUITests/Sources/**", "MdEditor/Shared/**"],
+	resources: ["MdEditor/Resources/**"],
     dependencies: [.target(name: "MdEditor")]
 )
 
@@ -60,8 +61,8 @@ let project = Project(
     name: "MdEditor",
     organizationName: "MyTeam",
     options: .options(
-        defaultKnownRegions: ["Base", "ru"],
-        developmentRegion: "Base"
+        defaultKnownRegions: ["en", "ru"],
+        developmentRegion: "en"
     ),
     packages: [.local(path: .relativeToManifest("Packages/TaskManagerPackage"))],
     targets: [target, uiTestTarget],

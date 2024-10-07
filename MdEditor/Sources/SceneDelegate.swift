@@ -9,11 +9,11 @@ import UIKit
 import TaskManagerPackage
 
 protocol IAppFactory {
-    func makeKeyWindowWithCoordinator(scene: UIWindowScene) -> (UIWindow, ICoordinator)
+    func makeKeyWindowWithCoordinator(scene: UIWindowScene) -> (UIWindow, AppCoordinator)
 }
 
 extension IAppFactory {
-    func makeKeyWindowWithCoordinator(scene: UIWindowScene) -> (UIWindow, ICoordinator) {
+    func makeKeyWindowWithCoordinator(scene: UIWindowScene) -> (UIWindow, AppCoordinator) {
         let navigationController = UINavigationController()
         navigationController.navigationBar.prefersLargeTitles = true
 
@@ -30,7 +30,7 @@ extension IAppFactory {
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    private var appCoordinator: ICoordinator! // swiftlint:disable:this implicitly_unwrapped_optional
+    private var appCoordinator: AppCoordinator! // swiftlint:disable:this implicitly_unwrapped_optional
 
     func scene(
         _ scene: UIScene,
@@ -40,7 +40,16 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         (window, appCoordinator) = makeKeyWindowWithCoordinator(scene: scene)
 
+		
+#if DEBUG
+		let parameters = LaunchArguments.parameters()
+		if let enableTesting = parameters[LaunchArguments.enableTesting], enableTesting {
+			UIView.setAnimationsEnabled(false)
+		}
+		appCoordinator.testStart(paremeters: parameters)
+#else
         appCoordinator.start()
+#endif
     }
 }
 
